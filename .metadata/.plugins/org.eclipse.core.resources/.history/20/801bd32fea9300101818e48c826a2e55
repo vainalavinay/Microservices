@@ -1,0 +1,5 @@
+package com.microservice.employee.entity;
+
+public class EmployeeResponse {
+
+}
