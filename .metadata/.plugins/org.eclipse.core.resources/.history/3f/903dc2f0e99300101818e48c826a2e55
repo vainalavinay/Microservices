@@ -1,5 +1,0 @@
-package com.microservice.employee.config;
-
-public class EmployeeConfig {
-
-}

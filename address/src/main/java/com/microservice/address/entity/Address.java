@@ -29,7 +29,7 @@ public class Address
 	private String state;
 	
 	@Column(name="employee_id")
-	private String employeeId;
+	private int employeeId;
 
 	public int getId() {
 		return id;
@@ -71,11 +71,11 @@ public class Address
 		this.state = state;
 	}
 
-	public String getEmployeeId() {
+	public int getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setEmployeeId(String employeeId) {
+	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
 	}
 	

@@ -7,6 +7,8 @@ import com.microservice.employee.repository.EmployeeRepository;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,17 +20,22 @@ public class EmployeeService
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	@Autowired
+//	@Autowired
 	private RestTemplate restTemplate;
 
     @Autowired
     private EmployeeRepository employeeRepository;
+    
+    public EmployeeService(@Value("${application.base.url}") String baseUrl, RestTemplateBuilder restTemplateBuilder)
+    {
+    	this.restTemplate = restTemplateBuilder.rootUri(baseUrl).build();
+    }
 
     public EmployeeResponse getEmployeeDetails(int id)
     {
         Optional<Employee> employee = employeeRepository.findById(id);
         EmployeeResponse employeeResponse = modelMapper.map(employee, EmployeeResponse.class);
-        AddressResponse addressResponse = restTemplate.getForObject("http://localhost:8081/address-app/api/address/{id}", AddressResponse.class, id);
+        AddressResponse addressResponse = restTemplate.getForObject("/address/{id}", AddressResponse.class, id);
         employeeResponse.setAddressResponse(addressResponse);
         return employeeResponse;
     }
